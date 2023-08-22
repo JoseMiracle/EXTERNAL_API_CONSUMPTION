@@ -32,7 +32,7 @@ def getCountryInformation(country_name: str, year: int):
         capital_info_and_iso = getCountryCapitalAndTheirIso(
             target_country=target_country
         )  # This is to get the country's capital and their Iso
-
+        country_currency = getCountryCurrency(target_country=target_country)
         
         population_counts = target_country_data["populationCounts"].values[0] # Access the populationCounts for the target country
         year_index = year - 1960
@@ -52,7 +52,7 @@ def getCountryInformation(country_name: str, year: int):
                 f"counts of population in year:{year}"
             ] = population_counts[year_index]["value"]
 
-        merged_country_information = capital_info_and_iso | country_information
+        merged_country_information = capital_info_and_iso | country_information | country_currency
         return merged_country_information
     else:
         return {
@@ -87,3 +87,21 @@ def getCountryCapitalAndTheirIso(target_country) -> dict[str, any]:
         "iso2_of_country": iso2_of_target_country,
         "iso3_of_country": iso3_of_target_country,
     }
+
+
+
+def getCountryCurrency(target_country):
+    response = requests.get("https://countriesnow.space/api/v0.1/countries/currency")
+
+    country_info = response.json()
+    parsed_data = country_info["data"]
+    df = pd.DataFrame(parsed_data)
+
+    # Find the index of the country in the DataFrame
+    country_index = df[df["name"] == target_country].index[0]
+    target_country_currency = df.loc[country_index, "currency"]
+    return {
+        f"{target_country} currency":target_country_currency
+    }
+
+    
