@@ -1,0 +1,9 @@
+black==23.7.0
+django==4.2.4
+djangorestframework==3.14.0
+django-jazzmin== 2.6.0
+djangorestframework-simplejwt==5.2.2
+drf-spectacular==0.26.4
+python-dotenv==1.0.0
+requests==2.31.0
+
