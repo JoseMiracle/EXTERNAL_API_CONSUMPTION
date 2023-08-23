@@ -6,13 +6,21 @@ from rest_framework.response import Response
 
 
 class GetCountryInformationView(APIView):
+    """
+        This gets infomation of a country e.g currency, latitude, longitude
+        iso2, iso3 
+    """
     def get(self, request):
-        country_name = request.data["country_name"].capitalize()
-        try:
-            year = int(request.data["year"]) or 2020
-        except:
-            year = 2018
+        if "country_name" not in request.data:
+            return Response({
+                "Error": "Pls provide a country name"
+            }, status=status.HTTP_400_BAD_REQUEST)
         
-        country_data = getCountryInformation(country_name=country_name, year=year)
+        else:
+            country_name = request.data["country_name"].capitalize()
+            year = int(request.data["year"]) if "year" in request.data else 2018  
+            country_data = getCountryInformation(country_name=country_name, year=year)
+            return Response(data=country_data, status=status.HTTP_200_OK)
 
-        return Response(data=country_data, status=status.HTTP_200_OK)
+
+

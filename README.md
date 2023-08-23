@@ -57,7 +57,17 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
-Access the DRF APIS at `http://127.0.0.1:8000/external-api-integration/`.
+Access the DRF APIS at `http://127.0.0.1:8000/api/external-api-integration/`.
+```
+
+
+  To test the endpoint, test with a json like
+  {
+    "country_name": "Canada",
+    "year": "1980"
+  }
+  NOTE: country year from 1960-2018 is available
+```
 
 ## Contributing
 

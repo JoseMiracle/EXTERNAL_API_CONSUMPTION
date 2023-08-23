@@ -12,13 +12,16 @@ from timeit import default_timer as timer
 
 
 def getCountryInformation(country_name: str, year: int):
+    """
+        This get country information like currency, iso2, iso3, and population from year 1960 to 2018
+    """
     start = timer()
 
     response = requests.get("https://countriesnow.space/api/v0.1/countries/population")
 
-    country_info = response.json()
+    countries_info = response.json()
 
-    parsed_data = country_info["data"]
+    parsed_data = countries_info["data"]
 
     df = pd.DataFrame(parsed_data)
 
@@ -33,6 +36,7 @@ def getCountryInformation(country_name: str, year: int):
             target_country=target_country
         )  # This is to get the country's capital and their Iso
         country_currency = getCountryCurrency(target_country=target_country)
+        country_positions = getCountryLocations(target_country=target_country)
         
         population_counts = target_country_data["populationCounts"].values[0] # Access the populationCounts for the target country
         year_index = year - 1960
@@ -52,7 +56,7 @@ def getCountryInformation(country_name: str, year: int):
                 f"counts of population in year:{year}"
             ] = population_counts[year_index]["value"]
 
-        merged_country_information = capital_info_and_iso | country_information | country_currency
+        merged_country_information = capital_info_and_iso | country_information | country_currency | country_positions
         return merged_country_information
     else:
         return {
@@ -69,8 +73,8 @@ def getCountryCapitalAndTheirIso(target_country) -> dict[str, any]:
     """
     response = requests.get("https://countriesnow.space/api/v0.1/countries/capital")
 
-    country_info = response.json()
-    parsed_data = country_info["data"]
+    countries_info = response.json()
+    parsed_data = countries_info["data"]
     df = pd.DataFrame(parsed_data)
 
     # Find the index of the country in the DataFrame
@@ -91,17 +95,43 @@ def getCountryCapitalAndTheirIso(target_country) -> dict[str, any]:
 
 
 def getCountryCurrency(target_country):
+    """
+        This is for getting a country's currency
+    """
     response = requests.get("https://countriesnow.space/api/v0.1/countries/currency")
 
-    country_info = response.json()
-    parsed_data = country_info["data"]
+    countries_info = response.json()
+    parsed_data = countries_info["data"]
     df = pd.DataFrame(parsed_data)
 
-    # Find the index of the country in the DataFrame
-    country_index = df[df["name"] == target_country].index[0]
+    country_index = df[df["name"] == target_country].index[0] # Find the index of the country in the DataFrame
     target_country_currency = df.loc[country_index, "currency"]
     return {
         f"{target_country} currency":target_country_currency
     }
 
+def getCountryLocations(target_country):
+    """
+        This is for getting a country's currency
+    """
+    response = requests.get("https://countriesnow.space/api/v0.1/countries/positions")
+
+    countries_info = response.json()
+    parsed_data = countries_info["data"]
+    df = pd.DataFrame(parsed_data)
+
+    country_index = df[df["name"] == target_country].index[0]  # Find the index of the country in the DataFrame
+
+    target_country_longitude = df.loc[country_index, "long"]
+    target_country_latitude = df.loc[country_index, "lat"]
+
     
+    return {
+        "longitude": target_country_longitude,
+        "latitude": target_country_latitude,
+        
+    }
+
+    
+
+
