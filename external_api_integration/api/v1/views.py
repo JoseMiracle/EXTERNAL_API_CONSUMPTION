@@ -15,6 +15,12 @@ class GetCountryInformationView(APIView):
             return Response({
                 "Error": "Pls provide a country name"
             }, status=status.HTTP_400_BAD_REQUEST)
+        elif "year" in request.data:
+            if int(request.data["year"]) > 2018 or int(request.data["year"]) < 1960:
+                return Response({
+                "Info": "Pls provide a year from 1960 to 2018"
+            }, status=status.HTTP_400_BAD_REQUEST)
+                   
         
         else:
             country_name = request.data["country_name"].capitalize()
