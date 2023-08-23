@@ -7,7 +7,6 @@ This repository provides an example of how to integrate an external API into a D
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
 - [Setting Up the Environment](#setting-up-the-environment)
-- [Configuring the API Integration](#configuring-the-api-integration)
 - [Running the Application](#running-the-application)
 - [Contributing](#contributing)
 
@@ -56,7 +55,7 @@ pip install -r requirements.txt
 ```bash
 python manage.py runserver
 ```
-
+## Running the Application
 Access the DRF APIS at `http://127.0.0.1:8000/api/external-api-integration/`.
 ```
 
