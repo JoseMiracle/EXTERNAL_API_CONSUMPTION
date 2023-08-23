@@ -60,7 +60,7 @@ python manage.py runserver
 Access the DRF APIS at `http://127.0.0.1:8000/api/external-api-integration/`.
 ```
 
-
+  e.g http://127.0.0.1:8000/api/external-api-integration/fetch-country-information/
   To test the endpoint, test with a json like
   {
     "country_name": "Canada",
