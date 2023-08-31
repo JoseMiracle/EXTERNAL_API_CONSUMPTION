@@ -1,6 +1,6 @@
 # External API Integration in Django with Django REST Framework
 
-This repository provides an example of how to integrate an external API into a Django project using the Django REST Framework (DRF). The example demonstrates how to make API requests, handle responses, and expose the data through your own API endpoints.
+This repository provides an example of how to integrate an external API into a Django project using the Django REST Framework (DRF). The example demonstrates how to make API requests, handle responses, and expose the data through your own API endpoints, the endpoints are provided by [https://documenter.getpostman.com/view/1134062/T1LJjU52#intro]
 
 ## Table of Contents
 
